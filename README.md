@@ -30,7 +30,9 @@ A integração requer acesso à API e créditos ou faturamento configurado; a as
 
 ## Fluxo em n8n
 
-O mesmo desenho pode ser montado com um gatilho manual, um nó para gerar dados fictícios, um nó Code para identificar evidências, um nó de IA configurado com credenciais próprias e uma etapa final de revisão. Nenhum workflow ou integração da empresa original é incluído aqui.
+O arquivo `fluxo-exemplo.n8n.json` é um exemplo importável: no editor do n8n, use **Import from File** e selecione o arquivo. Execute o fluxo manualmente para gerar dois perfis fictícios, identificar evidências textuais e preparar um pedido para revisão com IA.
+
+O fluxo não faz chamadas externas por padrão e não inclui credenciais. Para efetuar a análise no n8n, adicione um nó de IA ou requisição HTTP após **Preparar evidências e pedido de IA**, configure suas próprias credenciais e envie o campo `pedidoParaIA`. A chamada poderá gerar custos. A integração de IA pronta para execução está na versão em Node.js descrita acima. Nenhum workflow ou integração da empresa original é incluído aqui.
 
 ## Limitações
 
