@@ -1,0 +1,46 @@
+{
+  "name": "Checklist de revisão humana",
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Entrada da ferramenta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "code",
+      "name": "Checklist de revisão humana",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "jsCode": "\nreturn [{json:{consulta:$json.query || '', checklist:[\n 'Use somente fatos presentes nos perfis fictícios e cite evidências.',\n 'Registre informações ausentes como desconhecidas; não invente competências.',\n 'Não classifique, recomende, elimine ou tome decisões sobre pessoas.',\n 'Revisão e decisão final cabem a uma pessoa responsável.',\n 'Exemplos são sintéticos e a correspondência textual é limitada.'\n]}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Entrada da ferramenta": {
+      "main": [
+        [
+          {
+            "node": "Checklist de revisão humana",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+
