@@ -1,0 +1,46 @@
+{
+  "name": "Consultar perfis fictícios",
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Entrada da ferramenta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "code",
+      "name": "Consultar perfis fictícios",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "jsCode": "\nconst perfis = [\n { id:'P01', historico:'Atendimento B2B por três anos, gestão de carteira e relatórios mensais.' },\n { id:'P02', historico:'Prospecção de empresas e suporte a vendas. Experiência em organização de contatos.' },\n { id:'P03', historico:'Análise de relatórios e operações internas. Experiência comercial não informada.' },\n];\nreturn [{json:{fonte:'base criada para demonstração', consulta:$json.query || '', perfis}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Entrada da ferramenta": {
+      "main": [
+        [
+          {
+            "node": "Consultar perfis fictícios",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+
