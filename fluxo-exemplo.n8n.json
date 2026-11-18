@@ -1,0 +1,41 @@
+{
+  "name": "Portfólio - análise assistida com dados fictícios",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "manual-trigger",
+      "name": "Iniciar demonstração",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Estes dados foram criados exclusivamente para demonstração.\nconst vaga = { titulo: 'Atendimento empresarial', criterios: ['atendimento', 'organização', 'relatórios'] };\nconst perfis = [\n  { id: 'Exemplo A', experiencia: 'Atendimento a empresas e organização de solicitações.' },\n  { id: 'Exemplo B', experiencia: 'Produção de relatórios e acompanhamento de processos.' },\n];\nreturn perfis.map(perfil => ({ json: { vaga, perfil } }));"
+      },
+      "id": "synthetic-data",
+      "name": "Gerar dados fictícios",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map(({ json }) => {\n  const { vaga, perfil } = json;\n  const texto = perfil.experiencia.toLocaleLowerCase('pt-BR');\n  const evidencias = vaga.criterios.filter(criterio => texto.includes(criterio));\n  const naoIdentificado = vaga.criterios.filter(criterio => !texto.includes(criterio));\n  return { json: { perfil: perfil.id, evidencias, naoIdentificado, pedidoParaIA: { instrucao: 'Organize as evidências e lacunas para revisão humana. Não infira informações ausentes e não tome decisão de contratação.', vaga, perfil } } };\n});"
+      },
+      "id": "prepare-review",
+      "name": "Preparar evidências e pedido de IA",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [480, 0]
+    }
+  ],
+  "connections": {
+    "Iniciar demonstração": { "main": [[{ "node": "Gerar dados fictícios", "type": "main", "index": 0 }]] },
+    "Gerar dados fictícios": { "main": [[{ "node": "Preparar evidências e pedido de IA", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" },
+  "pinData": {},
+  "active": false
+}
+
