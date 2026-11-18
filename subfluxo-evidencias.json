@@ -1,0 +1,46 @@
+{
+  "name": "Extrair evidências por critério",
+  "nodes": [
+    {
+      "id": "trigger",
+      "name": "Entrada da ferramenta",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "code",
+      "name": "Extrair evidências por critério",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "parameters": {
+        "jsCode": "\nconst criterios = ['B2B', 'prospecção', 'carteira', 'relatórios'];\nconst perfis = [\n {id:'P01', texto:'Atendimento B2B por três anos, gestão de carteira e relatórios mensais.'},\n {id:'P02', texto:'Prospecção de empresas e suporte a vendas. Experiência em organização de contatos.'},\n {id:'P03', texto:'Análise de relatórios e operações internas. Experiência comercial não informada.'},\n];\nconst mapa = perfis.map(p => ({ id:p.id, criterios:criterios.map(c => ({ criterio:c, encontrado:p.texto.toLocaleLowerCase('pt-BR').includes(c.toLocaleLowerCase('pt-BR')), trecho:p.texto })) }));\nreturn [{json:{metodo:'busca textual demonstrativa; ausência de termo não prova ausência de competência', consulta:$json.query || '', resultados:mapa}}];"
+      }
+    }
+  ],
+  "connections": {
+    "Entrada da ferramenta": {
+      "main": [
+        [
+          {
+            "node": "Extrair evidências por critério",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
+
