@@ -32,11 +32,20 @@ A integração requer acesso à API e créditos ou faturamento configurado; a as
 
 ### Agente de IA com ferramentas e subfluxos
 
-Importe `fluxo-agente-ia.n8n.json` no n8n. Ele contém um agente, um modelo OpenAI e três ferramentas que executam subfluxos: consulta à base fictícia, extração de evidências textuais e checklist de revisão humana. Os subfluxos também estão disponíveis como arquivos separados para inspeção; as ferramentas já contêm cópias dos seus respectivos fluxos, por isso não é necessário configurar IDs para executá-los.
+Importe `fluxo-agente-gemini.n8n.json` no n8n. Ele contém um agente, um modelo Gemini e três ferramentas que executam subfluxos: consulta à base fictícia, extração de evidências textuais e checklist de revisão humana. Os subfluxos também estão disponíveis como arquivos separados para inspeção; as ferramentas já contêm cópias dos seus respectivos fluxos, por isso não é necessário configurar IDs para executá-los. Alterações nos arquivos separados não atualizam automaticamente as cópias incorporadas.
 
-Para executar, abra o nó **Modelo OpenAI - configurar credencial**, crie ou selecione sua credencial OpenAI no n8n e execute o fluxo manualmente. O uso da API pode gerar cobrança. O agente precisa de acesso ao modelo e pode chamar as ferramentas em ordens diferentes; revise os registros de execução para confirmar as chamadas. A análise e a decisão final são humanas. Não use dados pessoais reais nesta demonstração.
+**Como funciona:**
 
-O arquivo `gerar-fluxo.cjs` permite regenerar o fluxo principal e os três subfluxos. Esta versão é uma demonstração independente, não uma reprodução dos sistemas de uma empresa.
+1. O gatilho manual inicia uma vaga e uma solicitação fictícias.
+2. O agente consulta as três ferramentas para obter os perfis, identificar evidências e conferir o checklist de revisão.
+3. Cada ferramenta executa um subfluxo incorporado e devolve os dados ao agente.
+4. O modelo elabora um relatório com evidências, pontos não identificados e limitações; a última etapa sinaliza que ele aguarda revisão humana.
+
+Para executar, abra o nó **Gemini - inserir credencial**, crie ou selecione sua credencial Gemini no n8n e execute o fluxo manualmente. A demonstração foi testada com Gemini 3.1 Flash Lite e perfis fictícios. O uso da API está sujeito a limites e, conforme a conta e o plano, pode gerar cobrança. A análise e a decisão final são humanas. Não use dados pessoais reais nesta demonstração.
+
+Há também uma variante OpenAI em `fluxo-agente-ia.n8n.json`; ela requer uma credencial própria e não foi testada de ponta a ponta.
+
+Os arquivos `gerar-fluxo.cjs` e `gerar-gemini.cjs` permitem regenerar os exemplos. Esta versão é uma demonstração independente, não uma reprodução dos sistemas de uma empresa.
 
 ### Exemplo simples sem IA
 
